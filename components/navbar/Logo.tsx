@@ -17,7 +17,7 @@ export default function Logo({ logoToggled, onClick }: LogoProps) {
     >
       {/* TEXT LOGO */}
       <motion.img
-        src="/img/textlogo.png"
+        src="/img/textLogo.png"
         alt="text logo"
         className="max-h-[80px] w-auto"
         variants={{

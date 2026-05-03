@@ -26,12 +26,15 @@ export default function LazyGallery({
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // detect mobile
+  // 📱 detect mobile safely
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
-  // intersection observer (for mobile active tracking)
+  // 👁️ intersection observer (sets active scroll item)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -48,12 +51,11 @@ export default function LazyGallery({
     return () => observer.disconnect();
   }, [setActive]);
 
-  // 🔥 playback logic (HYBRID FIX)
+  // 🎬 playback controller (desktop hover + mobile active)
   useEffect(() => {
     if (!videoRef.current) return;
 
-    const shouldPlay =
-      (isMobile && isActive) || (!isMobile && isHovered);
+    const shouldPlay = isMobile ? isActive : isHovered;
 
     if (shouldPlay) {
       videoRef.current.play().catch(() => {});
@@ -78,6 +80,7 @@ export default function LazyGallery({
           {/* Poster */}
           <img
             src={typeof poster === "string" ? poster : poster?.src}
+            alt={title}
             className={`
               absolute inset-0 w-full h-full object-cover
               transition-opacity duration-500
@@ -110,7 +113,11 @@ export default function LazyGallery({
           className="fixed inset-0 bg-black/95 flex items-center justify-center z-50"
           onClick={() => setIsOpen(false)}
         >
-          <div className="w-[90%] h-[80%]">
+          {/* 🚨 IMPORTANT: stop click bubbling so video doesn’t close modal */}
+          <div
+            className="w-[90%] h-[80%]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <video
               src={videoUrl}
               autoPlay
@@ -119,6 +126,7 @@ export default function LazyGallery({
             />
           </div>
 
+          {/* close button */}
           <button
             className="absolute top-5 right-5 text-white text-2xl"
             onClick={() => setIsOpen(false)}
