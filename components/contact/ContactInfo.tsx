@@ -11,7 +11,7 @@ export default function ContactInfo() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeIn" }}
-        className="flex flex-row md:flex-col gap-18 md:gap-6"
+        className="flex flex-row md:flex-col gap-20 md:gap-6"
       >
 
         {/* Instagram */}
