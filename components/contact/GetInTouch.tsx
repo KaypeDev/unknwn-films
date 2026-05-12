@@ -14,7 +14,7 @@ export default function GetInTouch() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           className="absolute text-white text-[70px] md:text-[120px] font-bold top-2 md:top-2 left-0 md:left-12 z-20"
         >
           GET IN
@@ -25,7 +25,7 @@ export default function GetInTouch() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 1.2,
+            duration: 1.7,
             delay: 0.2,
             ease: [0.22, 1, 0.36, 1],
           }}

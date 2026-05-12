@@ -44,7 +44,7 @@ export default function ContactInfo() {
           <h3 className="text-[14px] md:text-[16px] font-semibold mb-1">Email</h3>
 
           <a
-            href="mailto:client@email.com"
+            href="mailto:contact@unknwnfilms.com"
             className="opacity-70 text-[11px] md:text-[13px]"
           >
             contact@unknwnfilms.com
