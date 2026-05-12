@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
@@ -9,11 +10,20 @@ export default function ContactForm() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        emailjs
-            .send(
+        if (loading || success) return;
+
+        setLoading(true);
+        setError("");
+
+        try {
+            await emailjs.send(
                 "service_kkzxpxo",
                 "template_t408f2n",
                 {
@@ -23,28 +33,31 @@ export default function ContactForm() {
                     message,
                 },
                 "GCuLqAsvjhkRXxosP"
-            )
-            .then(() => {
-                alert("Message sent!");
+            );
 
-                setFirstName("");
-                setLastName("");
-                setEmail("");
-                setMessage("");
-            })
-            .catch((error) => {
-                console.error(error);
-                alert("Something went wrong.");
-            });
+            setSuccess(true);
+
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setMessage("");
+        } catch (err) {
+            console.error(err);
+            setError("Failed to send message. Try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <section>
-            {/* Accessibility / SEO label */}
             <h2 className="sr-only">Contact Form</h2>
 
-            <form
+            <motion.form
                 onSubmit={handleSubmit}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, ease: "easeIn" }}
                 className="max-w-lg mx-auto flex flex-col gap-6"
             >
                 {/* Name */}
@@ -55,7 +68,6 @@ export default function ContactForm() {
 
                     <div className="flex flex-col sm:flex-row gap-4 w-full">
                         <input
-                            type="text"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                             placeholder="First Name"
@@ -64,7 +76,6 @@ export default function ContactForm() {
                         />
 
                         <input
-                            type="text"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             placeholder="Last Name"
@@ -102,13 +113,32 @@ export default function ContactForm() {
                     />
                 </div>
 
-                <button
-                    type="submit"
-                    className="self-start w-fit bg-white text-black font-extrabold h-10 px-6 rounded-3xl hover:text-white transition text-lg sm:text-xl hover:bg-[#1d1d1d]"
-                >
-                    Submit
-                </button>
-            </form>
+                {/* Button + States */}
+                {/* Button + Messages */}
+                <div className="flex flex-col gap-2">
+                    <button
+                        type="submit"
+                        disabled={loading || success}
+                        className="self-start w-fit bg-white text-black font-extrabold h-10 px-6 rounded-3xl hover:text-white transition text-lg sm:text-xl hover:bg-[#1d1d1d] disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {loading ? "Sending..." : success ? "Sent" : "Submit"}
+                    </button>
+
+                    {/* Success message */}
+                    {success && (
+                        <p className="text-green-700 text-sm">
+                            Message sent successfully.
+                        </p>
+                    )}
+
+                    {/* Error message */}
+                    {error && (
+                        <p className="text-red-900 text-sm">
+                            {error}
+                        </p>
+                    )}
+                </div>
+            </motion.form>
         </section>
     );
 }
