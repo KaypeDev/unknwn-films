@@ -1,0 +1,18 @@
+export const mediaItems = [
+  { id: 1, src: "/img/gallery/land1.png" },
+  { id: 2, src: "/img/gallery/vert1.png" },
+  { id: 3, src: "/img/gallery/land2.png" },
+  { id: 4, src: "/img/gallery/vert2.png" },
+  { id: 5, src: "/img/gallery/vert3.png" },
+  { id: 6, src: "/img/gallery/land3.png" },
+  { id: 7, src: "/img/gallery/vert4.png" },
+  { id: 8, src: "/img/gallery/land4.png" },
+  { id: 9, src: "/img/gallery/land5.png" },
+  { id: 10, src: "/img/gallery/vert5.png" },
+  { id: 11, src: "/img/gallery/land6.png" },
+  { id: 12, src: "/img/gallery/vert6.png" },
+  { id: 13, src: "/img/gallery/vert7.png" },
+  { id: 14, src: "/img/gallery/land7.png" },
+  { id: 15, src: "/img/gallery/land8.png" },
+  { id: 16, src: "/img/gallery/vert8.png" },
+];

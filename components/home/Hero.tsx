@@ -20,6 +20,7 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="relative z-10 flex items-end text-center md:text-start md:justify-start h-full px-4 pb-30 xl:pb-10 2xl:pb-20">
         <div className="md:pl-25">
+
           <motion.h1
             className="text-[40px] md:text-[50px] lg:text-[65px] xl:text-[75px] font-extrabold"
             initial={{ opacity: 0, y: 40 }}
@@ -47,6 +48,7 @@ export default function Hero() {
           />
         </div>
       </div>
+
 
       {/* Gradient Overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-130 bg-gradient-to-b from-transparent to-black z-5 pointer-events-none" />
